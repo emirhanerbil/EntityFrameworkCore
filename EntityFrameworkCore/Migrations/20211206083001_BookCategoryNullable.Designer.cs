@@ -4,14 +4,16 @@ using EntityFrameworkCore.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EntityFrameworkCore.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20211206083001_BookCategoryNullable")]
+    partial class BookCategoryNullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -40,8 +42,6 @@ namespace EntityFrameworkCore.Migrations
                         .HasColumnType("nvarchar(120)");
 
                     b.HasKey("BookId");
-
-                    b.HasIndex("CategoryId");
 
                     b.ToTable("Books");
 
@@ -99,21 +99,6 @@ namespace EntityFrameworkCore.Migrations
                             CategoryId = 3,
                             CategoryName = "Roman"
                         });
-                });
-
-            modelBuilder.Entity("EntityFrameworkCore.Entities.Book", b =>
-                {
-                    b.HasOne("EntityFrameworkCore.Entities.Category", "Category")
-                        .WithMany("Books")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("EntityFrameworkCore.Entities.Category", b =>
-                {
-                    b.Navigation("Books");
                 });
 #pragma warning restore 612, 618
         }

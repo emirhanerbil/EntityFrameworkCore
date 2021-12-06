@@ -23,31 +23,15 @@ namespace EntityFrameworkCore.DAL.Mapping
                 .HasDefaultValueSql("GETDATE()");
 
             builder.HasData(
-                new Book { BookId = 1, Title = "Devlet" },
-                new Book { BookId = 2, Title = "Yol" }
+                new Book { BookId = 1, Title = "Devlet",CategoryId = 3 },
+                new Book { BookId = 2, Title = "Yol", CategoryId =3  }
                 );
+            builder.HasOne(b => b.Category)
+                .WithMany(c => c.Books)
+                .HasForeignKey(b => b.CategoryId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
 
-    }
-    class CategoryMap : IEntityTypeConfiguration<Category>
-    {
-        public void Configure(EntityTypeBuilder<Category> builder)
-        {
-            builder.HasKey(c => c.CategoryId);
-
-            builder.Property(c => c.CategoryName)
-                .IsRequired()
-                .HasMaxLength(255);
-
-            builder.Property(c => c.Description)
-                .HasDefaultValue("No info");
-
-            builder.HasData(
-                new Category { CategoryId = 1, CategoryName = "sağlık" },
-                new Category { CategoryId = 2, CategoryName = "Bilim" },
-                new Category { CategoryId = 3, CategoryName = "Roman" }
-                );
-        }
     }
 }
 
